@@ -36,7 +36,7 @@ const Testimonials = () => {
             setActiveIndex(e.realIndex);
           }}
           modules={[Pagination]}
-          className="md:h-96 h-[40rem] max-w-3xl"
+          className="md:h-96 h-[65rem] max-w-3xl"
         >
           {Testimonials.testimonials_content.map((content, i) => (
             <SwiperSlide key={i}>
@@ -46,7 +46,7 @@ const Testimonials = () => {
               transition-all ${activeIndex !== i && "scale-75 blur-sm"
                   }`}
               >
-                <img src={content.img} alt="..." className="h-24 rounded-full object-cover" />
+                <img src={content.img} alt="..." className="h-36 rounded-full object-cover" />
                 <div className="text-[#3B3835]">
                   <p className="sm:text-base text-sm leading-relaxed">{content.review}</p>
                   <br />

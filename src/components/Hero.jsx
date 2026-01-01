@@ -16,7 +16,7 @@ const Hero = () => {
             background: "linear-gradient(135deg, #3B3835 0%, #56514D 100%)",
           }}
         >
-          <h1 className="rotate-90 absolute md:top-[40%] top-[25%] md:right-[-30%] right-[-40%] text-[#E7E5E1] text-3xl md:text-5xl lg:text-6xl whitespace-nowrap">
+          <h1 className="rotate-90 absolute md:top-[40%] top-[21%] md:right-[-30%] sm:right-[-50%] right-[-40%] text-[#E7E5E1] text-2.5````xl md:text-5xl lg:text-6xl whitespace-nowrap">
             {hero.firstName}{" "}
             <span className="text-[#BFAF92]">{hero.LastName}</span>
           </h1>

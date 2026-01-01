@@ -13,7 +13,7 @@ const Hero = () => {
           data-aos-delay="1200"
           className="absolute h-full md:w-4/12 w-full sm:w-8/12 top-0 right-0 bottom-0 -z-10"
           style={{
-            background: "linear-gradient(135deg, #3B3835 0%, #56514D 100%)",
+            background: "linear-gradient(135deg, #101012 0%, #101012 100%)",
           }}
         >
           <h1 className="rotate-90 absolute md:top-[40%] top-[21%] md:right-[-30%] sm:right-[-50%] right-[-40%] text-[#E7E5E1] text-2.5````xl md:text-5xl lg:text-6xl whitespace-nowrap">

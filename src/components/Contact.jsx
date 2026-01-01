@@ -36,9 +36,10 @@ const Contact = () => {
   return (
     <section
       style={{
-        background: "linear-gradient(135deg, #3B3835 0%, #56514D 100%)",
+        background: "linear-gradient(135deg, #101012 0%, #101012 100%)",
       }}
       className="bg-dark_primary text-white w-full"
+      
       id="contact"
     >
       <Toaster />

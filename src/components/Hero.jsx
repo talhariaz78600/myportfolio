@@ -1,74 +1,126 @@
-// import content
-import { useEffect } from "react";
 import { content } from "../Content";
+
 const Hero = () => {
   const { hero } = content;
 
   return (
-    <section id="home" className="overflow-hidden w-full">
-      <div className="min-h-screen relative flex flex-col-reverse md:flex-row md:items-end justify-center items-center px-0 sm:px-4 md:px-8 lg:px-16 xl:px-24 gap-8 md:gap-0 w-full max-w-full">
-        {/* furqan */}
-        <div
-          data-aos="slide-left"
-          data-aos-delay="1200"
-          className="absolute h-full md:w-4/12 w-full sm:w-8/12 top-0 right-0 bottom-0 -z-10"
-          style={{
-            background: "linear-gradient(135deg, #101012 0%, #101012 100%)",
-          }}
-        >
-          <h1 className="rotate-90 absolute md:top-[40%] top-[21%] md:right-[-30%] sm:right-[-50%] right-[-40%] text-[#E7E5E1] text-2.5````xl md:text-5xl lg:text-6xl whitespace-nowrap">
-            {hero.firstName}{" "}
-            <span className="text-[#BFAF92]">{hero.LastName}</span>
-          </h1>
+    <section id="home" className="w-full">
+
+      {/* ══════════════════════════════════
+          MOBILE LAYOUT  (hidden on md+)
+      ══════════════════════════════════ */}
+      <div className="flex flex-col md:hidden">
+
+        {/* Dark top: navbar clearance + image */}
+        <div className="bg-[#101012] flex justify-center items-end" style={{ minHeight: "45vh", paddingTop: "4.5rem" }}>
+          <img
+            src={hero.image}
+            alt="Muhammad Talha Riaz"
+            className="h-56 w-auto object-cover object-top"
+          />
         </div>
 
-        {/* first col */}
-        <div
-          className="pb-10 pt-5 w-full max-w-xl mx-auto md:mx-0 px-4 sm:px-0"
-          data-aos="fade-down"
-        >
-          <h2
-            className="text-white md:text-[#2C2A28] leading-tight  text-xl sm:text-3xl md:text-4xl lg:text-5xl"
-            style={{ whiteSpace: "pre-line" }}
-          >
+        {/* Light bottom: all text */}
+        <div className="bg-white px-5 py-8">
+          <h1 className="font-Inria font-bold text-[#2C2A28] text-2xl leading-snug">
             {hero.title}
-          </h2>
-          <p className="text-white sm:text-[#2C2A28] mt-3  leading-relaxed text-base sm:text-sm md:text-xl">
+          </h1>
+          <p className="text-[#56514D] mt-3 text-sm leading-relaxed">
             {hero.subtitle}
           </p>
-          <br />
-          <div className="flex justify-end">
-            <button className="btn bg-transparent border border-[#BFAF92] text-white sm:text-[#2C2A28] hover:bg-[#BFAF92] hover:border-[#BFAF92] hover:text-[#2C2A28] px-4 py-2 text-sm md:text-base">
+          <div className="mt-5">
+            <a
+              href="#contact"
+              className="inline-block px-6 py-2.5 border-2 border-[#BFAF92] text-[#2C2A28] rounded-md rounded-br-3xl text-sm font-Poppins font-medium hover:bg-[#BFAF92] hover:text-white transition-all duration-300"
+            >
               {hero.btnText}
-            </button>
+            </a>
           </div>
-          <div className="flex flex-col gap-6 mt-8">
-            {hero.hero_content.map((content, i) => (
-              <div
-                key={i}
-                data-aos="fade-down"
-                data-aos-delay={i * 300}
-                className={`flex items-center w-full max-w-xs gap-4 sm:gap-5 text-base sm:text-lg md:text-xl ${
-                  i === 1 ? " flex-row-reverse text-right" : ""
-                }`}
-              >
-                <h3>{content.count}</h3>
-                <p>{content.text}</p>
+
+          <div className="mt-7 flex flex-col gap-5">
+            {hero.hero_content.map((item, i) => (
+              <div key={i} className="flex items-center gap-4">
+                <span className="font-Paprika text-4xl text-[#BFAF92] leading-none flex-shrink-0">
+                  {item.count}
+                </span>
+                <p className="text-[#56514D] text-sm leading-snug">
+                  {item.text}
+                </p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      {/* ══════════════════════════════════
+          DESKTOP LAYOUT  (hidden below md)
+      ══════════════════════════════════ */}
+      <div className="hidden md:flex min-h-screen">
+
+        {/* Left panel: text */}
+        <div className="flex-1 flex flex-col justify-center px-10 lg:px-16 py-24">
+          <h1 className="font-Inria font-bold text-[#2C2A28] text-4xl lg:text-5xl leading-tight whitespace-pre-line">
+            {hero.title}
+          </h1>
+          <p className="text-[#56514D] mt-5 text-base lg:text-lg leading-relaxed max-w-lg">
+            {hero.subtitle}
+          </p>
+          <div className="mt-7">
+            <a
+              href="#contact"
+              className="inline-block px-9 py-2.5 border-2 border-[#BFAF92] text-[#2C2A28] rounded-md rounded-br-3xl font-Poppins font-medium hover:bg-[#BFAF92] hover:text-white transition-all duration-300"
+            >
+              {hero.btnText}
+            </a>
+          </div>
+
+          <div className="mt-10 flex gap-10 lg:gap-14">
+            {hero.hero_content.map((item, i) => (
+              <div key={i} className="flex items-center gap-4">
+                <span className="font-Paprika text-5xl text-[#BFAF92] leading-none">
+                  {item.count}
+                </span>
+                <p className="text-[#56514D] text-sm leading-snug max-w-[8rem]">
+                  {item.text}
+                </p>
               </div>
             ))}
           </div>
         </div>
 
-        {/* sec col */}
-        <div className="md:h-[37rem] h-64 sm:h-80 lg:h-[37rem] flex items-center justify-center w-full max-w-md mx-auto md:mx-0">
-          <img
-            src={hero.image}
-            data-aos="slide-up"
-            className="h-full w-auto object-cover rounded-xl shadow-lg"
-            alt="..."
-          />
+        {/* Right panel: dark + vertical name strip + person image */}
+        <div className="w-5/12 bg-[#101012] flex overflow-hidden">
+
+          {/* Vertical name strip — left edge of dark panel */}
+          <div className="w-8 flex-shrink-0 flex items-center justify-center py-10">
+            <span
+              className="text-[#BFAF92] font-Inria font-bold text-sm tracking-[0.25em] select-none whitespace-nowrap"
+              style={{ writingMode: "vertical-lr", transform: "rotate(180deg)" }}
+            >
+              {hero.firstName}
+            </span>
+            <span
+              className="text-[#E7E5E1] font-Inria font-bold text-sm tracking-[0.25em] select-none whitespace-nowrap mt-3"
+              style={{ writingMode: "vertical-lr", transform: "rotate(180deg)" }}
+            >
+              {hero.LastName}
+            </span>
+          </div>
+
+          {/* Person image fills remaining width */}
+          <div className="flex-1 flex items-end justify-center overflow-hidden">
+            <img
+              src={hero.image}
+              alt="Muhammad Talha Riaz"
+              data-aos="fade-up"
+              className="h-[92%] w-auto object-cover object-top"
+            />
+          </div>
+
         </div>
+
       </div>
+
     </section>
   );
 };

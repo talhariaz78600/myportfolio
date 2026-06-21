@@ -1,20 +1,11 @@
 import { content } from "../Content";
-// Import Swiper React components
-import { Swiper, SwiperSlide } from "swiper/react";
-
-// Import Swiper styles
-import "swiper/css";
-import "swiper/css/pagination";
-
-import { Pagination } from "swiper";
-import { useState } from "react";
 
 const Testimonials = () => {
   const { Testimonials } = content;
-  const [activeIndex, setActiveIndex] = useState(0);
+
   return (
     <section>
-      <div className="md:container px-5 pt-14">
+      <div className="w-full max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-14">
         <h2 className="title text-[#3B3835]" data-aos="fade-down">
           {Testimonials.title}
         </h2>
@@ -22,43 +13,34 @@ const Testimonials = () => {
           {Testimonials.subtitle}
         </h4>
         <br />
-        <Swiper
-          direction={"vertical"}
-          pagination={{
-            clickable: true,
-          }}
-          data-aos="fade-up"
-          loop={true}
-          spaceBetween={40}
-          slidesPerView={1.7}
-          onSlideChange={(e) => {
-            console.log(e.realIndex);
-            setActiveIndex(e.realIndex);
-          }}
-          modules={[Pagination]}
-          className="md:h-96 h-[65rem] max-w-3xl"
-        >
-          {Testimonials.testimonials_content.map((content, i) => (
-            <SwiperSlide key={i}>
-              <div
-                className={`duration-500 mx-8 p-8 h-full rounded-2xl flex items-center gap-6 
-              border-2 bg-[#F5F3F0] border-[#DDD5CA] md:flex-row flex-col 
-              transition-all ${activeIndex !== i && "scale-75 blur-sm"
-                  }`}
-              >
-                <img src={content.img} alt="..." className="h-36 rounded-full object-cover" />
-                <div className="text-[#3B3835]">
-                  <p className="sm:text-base text-sm leading-relaxed">{content.review}</p>
-                  <br />
-                  <h6 className="font-semibold">{content.name}</h6>
-                </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
+          {Testimonials.testimonials_content.map((item, i) => (
+            <div
+              key={i}
+              data-aos="fade-up"
+              data-aos-delay={i * 100}
+              className="p-5 sm:p-6 rounded-2xl bg-[#F5F3F0] border-2 border-[#DDD5CA] hover:border-[#BFAF92] hover:shadow-md transition-all duration-300 flex flex-col gap-4"
+            >
+              {/* Quote */}
+              <p className="text-sm sm:text-base leading-relaxed text-[#3B3835] flex-1">
+                {item.review}
+              </p>
+              {/* Author */}
+              <div className="flex items-center gap-3 pt-3 border-t border-[#DDD5CA]">
+                <img
+                  src={item.img}
+                  alt={item.name}
+                  className="w-11 h-11 sm:w-12 sm:h-12 rounded-full object-cover flex-shrink-0"
+                />
+                <span className="font-semibold text-[#3B3835] text-sm font-Poppins">
+                  {item.name}
+                </span>
               </div>
-            </SwiperSlide>
+            </div>
           ))}
-        </Swiper>
+        </div>
       </div>
     </section>
-
   );
 };
 

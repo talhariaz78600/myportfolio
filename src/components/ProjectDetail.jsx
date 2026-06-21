@@ -1,183 +1,143 @@
 import React, { useState, useEffect } from "react";
 import { content } from "../Content";
-import { 
-  MdArrowBack, 
-  MdCheck, 
-  MdCode, 
-  MdTimer, 
-  MdPerson, 
-  MdTrendingUp,
-  MdLaunch,
-  MdPhoneAndroid,
-  MdWeb,
-  MdStar
+import {
+  MdArrowBack, MdCheck, MdTimer, MdPerson, MdTrendingUp, MdStar,
 } from "react-icons/md";
-import { 
-  FaProjectDiagram, 
-  FaTools, 
-  FaGithub, 
-  FaPlay,
-  FaLightbulb,
-  FaAward,
-  FaRocket
+import {
+  FaProjectDiagram, FaTools, FaGithub, FaPlay, FaLightbulb, FaAward, FaRocket,
 } from "react-icons/fa";
 import { BiCodeAlt } from "react-icons/bi";
+
+const wrap = "w-full max-w-5xl mx-auto px-4 sm:px-6";
 
 const ProjectDetail = ({ projectId, onBack }) => {
   const [project, setProject] = useState(null);
   const [isVisible, setIsVisible] = useState(false);
-  const [activeTab, setActiveTab] = useState('overview');
+  const [activeTab, setActiveTab] = useState("overview");
 
   useEffect(() => {
-    const foundProject = content.Projects.project_content.find(p => p.id === projectId);
-    setProject(foundProject);
-    
-    // Scroll to top when component mounts
+    const found = content.Projects.project_content.find((p) => p.id === projectId);
+    setProject(found);
     window.scrollTo(0, 0);
-    
-    // Trigger animation
     setTimeout(() => setIsVisible(true), 100);
   }, [projectId]);
 
   if (!project) {
     return (
-      <div className="min-h-screen bg-[#F5F3F0] flex items-center justify-center">
-        <div className="text-[#3B3835] text-xl">Project not found</div>
+      <div className="min-h-screen bg-[#F5F3F0] flex items-center justify-center px-4">
+        <p className="text-[#3B3835] text-lg">Project not found</p>
       </div>
     );
   }
 
   const tabs = [
-    { id: 'overview', label: 'Overview', icon: FaProjectDiagram },
-    { id: 'features', label: 'Features', icon: MdCheck },
-    { id: 'tech', label: 'Technology', icon: FaTools },
-    { id: 'challenges', label: 'Challenges', icon: FaLightbulb },
-    { id: 'results', label: 'Results', icon: FaAward }
+    { id: "overview", label: "Overview", icon: FaProjectDiagram },
+    { id: "features", label: "Features", icon: MdCheck },
+    { id: "tech", label: "Tech", icon: FaTools },
+    { id: "challenges", label: "Challenges", icon: FaLightbulb },
+    { id: "results", label: "Results", icon: FaAward },
   ];
 
   const renderTabContent = () => {
-    switch(activeTab) {
-      case 'overview':
+    const cardCls = "bg-white rounded-xl p-4 sm:p-6 shadow-sm border border-[#DDD5CA]";
+    switch (activeTab) {
+      case "overview":
         return (
-          <div className="space-y-6">
-            <div className="bg-white rounded-xl p-8 shadow-lg border border-[#DDD5CA]">
-              <h3 className="text-xl font-bold text-[#3B3835] mb-4 flex items-center gap-3">
-                <FaProjectDiagram className="text-[#BFAF92]" />
-                Project Overview
-              </h3>
-              <p className="text-[#56514D] leading-relaxed text-lg">{project.overview}</p>
+          <div className="space-y-4">
+            <div className={cardCls}>
+              <p className="font-bold text-[#3B3835] text-sm sm:text-base mb-3 flex items-center gap-2 font-Poppins">
+                <FaProjectDiagram className="text-[#BFAF92] flex-shrink-0" /> Project Overview
+              </p>
+              <p className="text-[#56514D] leading-relaxed text-sm sm:text-base font-Poppins">
+                {project.overview}
+              </p>
             </div>
-            
-            <div className="grid md:grid-cols-2 gap-6">
-              <div className="bg-white rounded-xl p-6 shadow-lg border border-[#DDD5CA]">
-                <h4 className="font-bold text-[#3B3835] mb-3 flex items-center gap-2">
-                  <MdTimer className="text-[#BFAF92]" />
-                  Project Timeline
-                </h4>
-                <p className="text-[#56514D]">{project.duration}</p>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div className={cardCls}>
+                <p className="font-bold text-[#3B3835] text-sm mb-2 flex items-center gap-2 font-Poppins">
+                  <MdTimer className="text-[#BFAF92]" /> Timeline
+                </p>
+                <p className="text-[#56514D] text-sm font-Poppins">{project.duration}</p>
               </div>
-              
-              <div className="bg-white rounded-xl p-6 shadow-lg border border-[#DDD5CA]">
-                <h4 className="font-bold text-[#3B3835] mb-3 flex items-center gap-2">
-                  <MdPerson className="text-[#BFAF92]" />
-                  Client
-                </h4>
-                <p className="text-[#56514D]">{project.client}</p>
+              <div className={cardCls}>
+                <p className="font-bold text-[#3B3835] text-sm mb-2 flex items-center gap-2 font-Poppins">
+                  <MdPerson className="text-[#BFAF92]" /> Client
+                </p>
+                <p className="text-[#56514D] text-sm font-Poppins">{project.client}</p>
               </div>
             </div>
           </div>
         );
-      
-      case 'features':
+      case "features":
         return (
-          <div className="bg-white rounded-xl p-8 shadow-lg border border-[#DDD5CA]">
-            <h3 className="text-xl font-bold text-[#3B3835] mb-6 flex items-center gap-3">
-              <MdCheck className="text-[#BFAF92]" />
-              Key Features
-            </h3>
-            <div className="grid md:grid-cols-2 gap-4">
-              {project.features.map((feature, index) => (
-                <div
-                  key={index}
-                  className="flex items-start gap-3 p-4 rounded-lg bg-[#F5F3F0] hover:bg-[#BFAF92]/10 transition-all duration-300 transform hover:scale-105"
-                >
-                  <MdCheck className="text-[#BFAF92] text-xl mt-1 flex-shrink-0" />
-                  <span className="text-[#56514D] leading-relaxed">{feature}</span>
+          <div className={cardCls}>
+            <p className="font-bold text-[#3B3835] text-sm sm:text-base mb-4 flex items-center gap-2 font-Poppins">
+              <MdCheck className="text-[#BFAF92]" /> Key Features
+            </p>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              {project.features.map((f, i) => (
+                <div key={i} className="flex items-start gap-2 p-3 rounded-lg bg-[#F5F3F0]">
+                  <MdCheck className="text-[#BFAF92] text-base mt-0.5 flex-shrink-0" />
+                  <span className="text-[#56514D] text-xs sm:text-sm leading-relaxed font-Poppins">{f}</span>
                 </div>
               ))}
             </div>
           </div>
         );
-      
-      case 'tech':
+      case "tech":
         return (
-          <div className="bg-white rounded-xl p-8 shadow-lg border border-[#DDD5CA]">
-            <h3 className="text-xl font-bold text-[#3B3835] mb-6 flex items-center gap-3">
-              <FaTools className="text-[#BFAF92]" />
-              Technologies Used
-            </h3>
-            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-              {project.technologies.map((tech, index) => (
-                <div
-                  key={index}
-                  className="p-4 rounded-lg border border-[#DDD5CA] text-center hover:border-[#BFAF92] hover:shadow-md transition-all duration-300 transform hover:scale-105 bg-[#F5F3F0]"
-                >
-                  <BiCodeAlt className="text-2xl text-[#BFAF92] mx-auto mb-2" />
-                  <span className="text-[#56514D] font-medium text-sm">{tech}</span>
+          <div className={cardCls}>
+            <p className="font-bold text-[#3B3835] text-sm sm:text-base mb-4 flex items-center gap-2 font-Poppins">
+              <FaTools className="text-[#BFAF92]" /> Technologies Used
+            </p>
+            <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
+              {project.technologies.map((tech, i) => (
+                <div key={i} className="p-3 rounded-lg border border-[#DDD5CA] text-center bg-[#F5F3F0] hover:border-[#BFAF92] transition-colors">
+                  <BiCodeAlt className="text-xl text-[#BFAF92] mx-auto mb-1" />
+                  <span className="text-[#56514D] text-xs font-Poppins">{tech}</span>
                 </div>
               ))}
             </div>
           </div>
         );
-      
-      case 'challenges':
+      case "challenges":
         return (
-          <div className="bg-white rounded-xl p-8 shadow-lg border border-[#DDD5CA]">
-            <h3 className="text-xl font-bold text-[#3B3835] mb-6 flex items-center gap-3">
-              <FaLightbulb className="text-[#BFAF92]" />
-              Technical Challenges
-            </h3>
-            <div className="space-y-4">
-              {project.challenges.map((challenge, index) => (
-                <div
-                  key={index}
-                  className="p-6 rounded-lg border border-[#DDD5CA] hover:border-[#BFAF92] hover:shadow-md transition-all duration-300"
-                >
+          <div className={cardCls}>
+            <p className="font-bold text-[#3B3835] text-sm sm:text-base mb-4 flex items-center gap-2 font-Poppins">
+              <FaLightbulb className="text-[#BFAF92]" /> Technical Challenges
+            </p>
+            <div className="space-y-3">
+              {project.challenges.map((c, i) => (
+                <div key={i} className="p-3 sm:p-4 rounded-lg border border-[#DDD5CA] hover:border-[#BFAF92] transition-colors">
                   <div className="flex items-start gap-3">
-                    <div className="w-8 h-8 bg-[#BFAF92] text-white rounded-full flex items-center justify-center font-bold text-sm">
-                      {index + 1}
+                    <div className="w-7 h-7 bg-[#BFAF92] text-white rounded-full flex items-center justify-center font-bold text-xs flex-shrink-0">
+                      {i + 1}
                     </div>
-                    <span className="text-[#56514D] leading-relaxed">{challenge}</span>
+                    <span className="text-[#56514D] text-xs sm:text-sm leading-relaxed font-Poppins">{c}</span>
                   </div>
                 </div>
               ))}
             </div>
           </div>
         );
-      
-      case 'results':
+      case "results":
         return (
-          <div className="bg-white rounded-xl p-8 shadow-lg border border-[#DDD5CA]">
-            <h3 className="text-xl font-bold text-[#3B3835] mb-6 flex items-center gap-3">
-              <FaAward className="text-[#BFAF92]" />
-              Project Results & Impact
-            </h3>
-            <div className="grid md:grid-cols-2 gap-4">
-              {project.results.map((result, index) => (
-                <div
-                  key={index}
-                  className="p-6 rounded-lg bg-gradient-to-r from-[#BFAF92]/10 to-[#A99A83]/10 border border-[#DDD5CA] hover:shadow-md transition-all duration-300"
-                >
-                  <div className="flex items-start gap-3">
-                    <MdTrendingUp className="text-[#BFAF92] text-2xl mt-1 flex-shrink-0" />
-                    <span className="text-[#56514D] font-medium leading-relaxed">{result}</span>
+          <div className={cardCls}>
+            <p className="font-bold text-[#3B3835] text-sm sm:text-base mb-4 flex items-center gap-2 font-Poppins">
+              <FaAward className="text-[#BFAF92]" /> Results & Impact
+            </p>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              {project.results.map((r, i) => (
+                <div key={i} className="p-3 sm:p-4 rounded-lg bg-[#BFAF92]/10 border border-[#DDD5CA] hover:shadow-sm transition-all">
+                  <div className="flex items-start gap-2">
+                    <MdTrendingUp className="text-[#BFAF92] text-lg mt-0.5 flex-shrink-0" />
+                    <span className="text-[#56514D] text-xs sm:text-sm font-Poppins leading-relaxed">{r}</span>
                   </div>
                 </div>
               ))}
             </div>
           </div>
         );
-      
       default:
         return null;
     }
@@ -185,130 +145,128 @@ const ProjectDetail = ({ projectId, onBack }) => {
 
   return (
     <div className="min-h-screen bg-[#F5F3F0]">
-      {/* Hero Section */}
-      <div className="relative bg-gradient-to-r from-[#3B3835] to-[#56514D] text-white overflow-hidden">
-        <div className="absolute inset-0 bg-black/20"></div>
-        <div className="container mx-auto px-5 py-12 relative z-10">
+      {/* Hero */}
+      <div className="bg-gradient-to-r from-[#3B3835] to-[#56514D] text-white">
+        <div className={`${wrap} py-6 sm:py-10`}>
           <button
             onClick={onBack}
-            className="flex items-center gap-2 text-white/80 hover:text-white transition-all duration-300 mb-6"
+            className="flex items-center gap-2 text-white/70 hover:text-white transition-colors mb-5 text-sm font-Poppins"
           >
-            <MdArrowBack className="text-xl" />
-            <span className="font-medium">Back to Projects</span>
+            <MdArrowBack /> Back to Projects
           </button>
-          
-          <div className={`grid lg:grid-cols-2 gap-8 items-center transform transition-all duration-700 ${
-            isVisible ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'
-          }`}>
-            <div>
-              <div className="flex items-center gap-3 mb-4">
-                <span className="bg-[#BFAF92] text-white px-3 py-1 rounded-full text-sm font-medium">
-                  {project.category}
-                </span>
-                <span className="bg-white/20 text-white px-3 py-1 rounded-full text-sm font-medium">
-                  {project.type}
-                </span>
-              </div>
-              <h1 className="text-4xl font-bold mb-4">{project.title}</h1>
-              <p className="text-xl text-white/90 leading-relaxed mb-6">
-                {project.description}
-              </p>
-              
-              <div className="flex gap-4">
-                <button className="flex items-center gap-2 bg-[#BFAF92] hover:bg-[#A99A83] text-white px-6 py-3 rounded-lg transition-all duration-300 transform hover:scale-105">
-                  <FaPlay className="text-sm" />
-                  View Demo
-                </button>
-                <button className="flex items-center gap-2 bg-white/20 hover:bg-white/30 text-white px-6 py-3 rounded-lg transition-all duration-300 transform hover:scale-105">
-                  <FaGithub className="text-lg" />
-                  Source Code
-                </button>
-              </div>
+
+          <div
+            className={`flex flex-col gap-5 transition-all duration-700 ${
+              isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"
+            }`}
+          >
+            <div className="flex flex-wrap items-center gap-2">
+              <span className="bg-[#BFAF92] text-white px-3 py-1 rounded-full text-xs font-Poppins font-medium">
+                {project.category}
+              </span>
+              <span className="bg-white/20 text-white px-3 py-1 rounded-full text-xs font-Poppins">
+                {project.type}
+              </span>
             </div>
-            
-            <div className="relative">
-              <img
-                src={project.image}
-                alt={project.title}
-                className="rounded-2xl shadow-2xl w-full max-w-md mx-auto transform hover:scale-105 transition-transform duration-300"
-              />
-              <div className="absolute -bottom-4 -right-4 bg-[#BFAF92] text-white p-3 rounded-full">
-                <MdPhoneAndroid className="text-2xl" />
-              </div>
+
+            <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white font-Poppins leading-tight">
+              {project.title}
+            </h1>
+            <p className="text-white/80 text-sm sm:text-base leading-relaxed font-Poppins max-w-2xl">
+              {project.description}
+            </p>
+
+            <div className="flex flex-wrap gap-3">
+              <a
+                href={project.demoLink}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-2 bg-[#BFAF92] hover:bg-[#A99A83] text-white px-4 py-2.5 rounded-lg text-sm font-Poppins font-medium transition-all"
+              >
+                <FaPlay className="text-xs" /> View Demo
+              </a>
+              <a
+                href={project.githubLink}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-2 bg-white/20 hover:bg-white/30 text-white px-4 py-2.5 rounded-lg text-sm font-Poppins font-medium transition-all"
+              >
+                <FaGithub /> Source Code
+              </a>
             </div>
           </div>
         </div>
       </div>
 
-      {/* Status Bar */}
+      {/* Status bar */}
       <div className="bg-white border-b border-[#DDD5CA]">
-        <div className="container mx-auto px-5 py-4">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-6">
-              <div className="flex items-center gap-2">
-                <div className="w-3 h-3 bg-green-500 rounded-full"></div>
-                <span className="text-[#3B3835] font-medium">{project.status}</span>
-              </div>
-              <div className="flex items-center gap-2 text-[#7A766F]">
-                <MdTimer />
-                <span>{project.duration}</span>
-              </div>
-            </div>
+        <div className={`${wrap} py-3`}>
+          <div className="flex flex-wrap items-center gap-4 text-sm font-Poppins">
             <div className="flex items-center gap-2">
+              <div className="w-2.5 h-2.5 bg-green-500 rounded-full" />
+              <span className="text-[#3B3835] font-medium">{project.status}</span>
+            </div>
+            <div className="flex items-center gap-1.5 text-[#7A766F]">
+              <MdTimer />
+              <span>{project.duration}</span>
+            </div>
+            <div className="flex items-center gap-1.5 text-[#7A766F]">
               <MdStar className="text-yellow-500" />
-              <span className="text-[#3B3835] font-medium">Featured Project</span>
+              <span>Featured Project</span>
             </div>
           </div>
         </div>
       </div>
 
-      {/* Navigation Tabs */}
+      {/* Tabs */}
       <div className="bg-white border-b border-[#DDD5CA] sticky top-0 z-40">
-        <div className="container mx-auto px-5">
-          <div className="flex overflow-x-auto">
+        <div className={wrap}>
+          <div className="flex overflow-x-auto scrollbar-hide -mx-4 px-4 sm:mx-0 sm:px-0">
             {tabs.map((tab) => (
               <button
                 key={tab.id}
                 onClick={() => setActiveTab(tab.id)}
-                className={`flex items-center gap-2 px-6 py-4 border-b-2 transition-all duration-300 whitespace-nowrap ${
+                className={`flex items-center gap-1.5 px-3 sm:px-5 py-3 border-b-2 whitespace-nowrap text-xs sm:text-sm font-Poppins font-medium transition-all ${
                   activeTab === tab.id
-                    ? 'border-[#BFAF92] text-[#BFAF92] bg-[#BFAF92]/5'
-                    : 'border-transparent text-[#7A766F] hover:text-[#3B3835] hover:border-[#DDD5CA]'
+                    ? "border-[#BFAF92] text-[#BFAF92]"
+                    : "border-transparent text-[#7A766F] hover:text-[#3B3835]"
                 }`}
               >
-                <tab.icon className="text-lg" />
-                <span className="font-medium">{tab.label}</span>
+                <tab.icon className="text-sm flex-shrink-0" />
+                {tab.label}
               </button>
             ))}
           </div>
         </div>
       </div>
 
-      {/* Tab Content */}
-      <div className="container mx-auto px-5 py-12">
-        <div className={`transform transition-all duration-500 ${
-          isVisible ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'
-        }`}>
+      {/* Tab content */}
+      <div className={`${wrap} py-6 sm:py-10`}>
+        <div
+          className={`transition-all duration-500 ${
+            isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"
+          }`}
+        >
           {renderTabContent()}
         </div>
       </div>
 
-      {/* Call to Action */}
+      {/* CTA */}
       <div className="bg-gradient-to-r from-[#BFAF92] to-[#A99A83] text-white">
-        <div className="container mx-auto px-5 py-12 text-center">
-          <FaRocket className="text-4xl mx-auto mb-4" />
-          <h3 className="text-2xl font-bold mb-4">Interested in a similar project?</h3>
-          <p className="text-xl mb-6 opacity-90">
-            Let's collaborate to bring your ideas to life with cutting-edge technology and innovative solutions.
+        <div className={`${wrap} py-10 text-center`}>
+          <FaRocket className="text-3xl mx-auto mb-3" />
+          <h2 className="text-lg sm:text-2xl font-bold mb-3 font-Poppins text-white">
+            Interested in a similar project?
+          </h2>
+          <p className="text-sm sm:text-base mb-5 opacity-90 font-Poppins max-w-xl mx-auto">
+            Let's collaborate to bring your ideas to life with cutting-edge technology.
           </p>
-          <button 
+          <button
             onClick={() => {
               onBack();
-              setTimeout(() => {
-                document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' });
-              }, 100);
+              setTimeout(() => document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" }), 100);
             }}
-            className="bg-white text-[#3B3835] font-semibold py-3 px-8 rounded-lg hover:bg-gray-100 transition-all duration-300 transform hover:scale-105"
+            className="bg-white text-[#3B3835] font-Poppins font-semibold py-2.5 px-7 rounded-lg text-sm sm:text-base hover:bg-gray-100 transition-all"
           >
             Start Your Project
           </button>
